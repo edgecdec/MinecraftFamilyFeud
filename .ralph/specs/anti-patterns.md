@@ -20,7 +20,7 @@ These are mistakes Ralph has made on previous projects. Do not repeat them.
 - Minimize context window usage — you degrade when the window fills up.
 
 ## Build & Validation
-- NEVER commit code that doesn't pass ALL backpressure commands (tsc --noEmit).
+- NEVER commit code that doesn't pass ALL backpressure commands (tsc --noEmit, npm run build).
 - When changing imports or moving files, verify build passes — macOS is case-insensitive but the Linux server is case-sensitive.
 
 ## Code Quality

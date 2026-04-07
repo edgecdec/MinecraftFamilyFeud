@@ -99,6 +99,7 @@ Run in order. ALL must exit 0 before committing.
 
 ```bash
 npx tsc --noEmit
+npm run build
 ```
 
 ## Remote Server Access
