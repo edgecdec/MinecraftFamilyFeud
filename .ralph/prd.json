@@ -195,7 +195,7 @@
       "title": "First deploy to server",
       "spec": "specs/deployment.md",
       "priority": 22,
-      "status": "open",
+      "status": "in_progress",
       "dependencies": ["TASK-010", "TASK-012", "TASK-013", "TASK-016", "TASK-017"],
       "description": "Commit and push all code. SSH into the server, cd to /var/www/MinecraftFamilyFeud, git pull, npm install, npm run build, pm2 start server.js --name minecraft-feud. Verify the site loads at https://minecraftfamilyfeud.edgecdec.com. Verify the webhook works by making a small change, pushing, and confirming auto-deploy."
     }
