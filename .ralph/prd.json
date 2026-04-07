@@ -105,7 +105,7 @@
       "title": "Build landing page",
       "spec": "specs/ui-layout.md",
       "priority": 12,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-005"],
       "description": "Create src/app/page.tsx — the landing page. Minecraft-styled title 'MINECRAFT FAMILY FEUD'. Two sections: 'Host a Game' button that navigates to /host, and 'Join a Game' with a room code input (4 chars uppercase) + team name input + join button that navigates to /buzzer?room=CODE&team=NAME. Mobile-friendly layout using MUI components and the Minecraft theme."
     },

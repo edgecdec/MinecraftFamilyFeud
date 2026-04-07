@@ -92,3 +92,12 @@
   - The emit function needs a generic type parameter approach rather than trying to spread GameSocket['emit'] args directly — TypeScript can't infer tuple types from the spread.
   - Server was returning 500 due to stale .next cache on remote — clearing .next and restarting pm2 fixed it. Not related to this task.
   - NOTE: deploy_webhook.sh may need to `rm -rf .next` before restarting pm2 — the dev mode .next cache gets corrupted on git pull. Logged for future task consideration.
+
+## TASK-012: Build landing page (2026-04-07)
+- Implemented landing page with "Host a Game" button and "Join a Game" form (room code + team name inputs)
+- Used MUI theme tokens throughout, no hardcoded colors
+- Used slotProps.htmlInput instead of deprecated inputProps for MUI v9 TextField
+- Fixed pre-existing build failure: installed @mui/material-nextjs and added AppRouterCacheProvider to ThemeRegistry — this resolved the "<Html> should not be imported outside of pages/_document" error during static page generation
+- Lesson: MUI v9 + Next.js App Router requires @mui/material-nextjs AppRouterCacheProvider for proper Emotion SSR. Without it, production builds fail on 404/error page prerendering.
+- Lesson: Force-push with webhook can cause missed deploys if the webhook fires for an intermediate commit that gets overwritten. Manual build on server may be needed.
+- Nova Act test: all 7 checks passed (title, subtitle, host button, join section, room code input, team name input, join button disabled state)

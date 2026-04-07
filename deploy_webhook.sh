@@ -33,7 +33,7 @@ fi
 
 pm2 stop "$PM2_NAME" 2>/dev/null || true
 
-rm -rf .next
+rm -rf .next node_modules/.cache
 if npm run build; then
   echo "Build succeeded, restarting..."
   pm2 restart "$PM2_NAME" || pm2 start server.js --name "$PM2_NAME"
