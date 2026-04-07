@@ -69,7 +69,7 @@
       "title": "Implement face-off logic in game manager",
       "spec": "specs/game-flow.md",
       "priority": 8,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-007"],
       "description": "Add face-off methods to GameManager: startFaceoff(roomCode, questionId) loads the question and sets phase to 'faceoff', faceoffBuzz(roomCode, teamName) records buzz order, faceoffAnswer(roomCode, teamName, answerIndex|null) records each team's face-off guess and reveals the answer if on the board, resolveFaceoff(roomCode) determines the winner (higher-ranked answer wins, or only correct answer wins, or first buzzer if both wrong), playOrPass(roomCode, choice) sets controllingTeamIndex and transitions to 'playing' phase."
     },

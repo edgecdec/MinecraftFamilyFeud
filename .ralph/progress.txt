@@ -52,3 +52,12 @@
 - Validation in `joinTeam`: checks room exists, game in lobby phase, not full, no duplicate team names.
 - `removeGame()` added for cleanup when host disconnects (will be used by socket handler later).
 - TypeScript passed first try — types from TASK-003 were well-defined.
+
+## TASK-008: Implement face-off logic in game manager (2026-04-07)
+- Added 5 exported functions: startFaceoff, faceoffBuzz, faceoffAnswer, resolveFaceoff, playOrPass
+- Extracted a private getGame() helper to DRY up the "get state or throw" pattern (also useful for TASK-009)
+- resolveFaceoff returns { state, winnerTeam } so the caller (socket handler) can broadcast the winner
+- playOrPass takes winnerTeam as a param since the caller needs to pass it from resolveFaceoff result
+- Face-off answers auto-reveal on the board and accumulate roundPoints during the faceoff itself
+- Phase transitions: lobby→faceoff (startFaceoff), faceoff→faceoff-resolve (both answered), faceoff-resolve→playing (playOrPass)
+- Lessons: Keep return types explicit when a function returns more than just GameState (resolveFaceoff returns winner info too)
