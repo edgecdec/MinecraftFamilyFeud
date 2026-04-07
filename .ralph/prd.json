@@ -114,7 +114,7 @@
       "title": "Build board display view",
       "spec": "specs/ui-layout.md",
       "priority": 13,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-011"],
       "description": "Create src/app/board/page.tsx — the projected game board. Full-screen display showing: question text at top, answer tiles in two columns (numbered, hidden as stone-colored tiles, revealed showing text + points), team scores at bottom left/right, strike indicators. Reads roomCode from query params. Uses useGameSocket with role 'board'. No interactive elements — display only. Must look good on a 1080p projector."
     },

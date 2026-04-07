@@ -101,3 +101,12 @@
 - Lesson: MUI v9 + Next.js App Router requires @mui/material-nextjs AppRouterCacheProvider for proper Emotion SSR. Without it, production builds fail on 404/error page prerendering.
 - Lesson: Force-push with webhook can cause missed deploys if the webhook fires for an intermediate commit that gets overwritten. Manual build on server may be needed.
 - Nova Act test: all 7 checks passed (title, subtitle, host button, join section, room code input, team name input, join button disabled state)
+
+## TASK-013: Build board display view (2026-04-07)
+- Created 3 files: src/app/board/page.tsx, src/components/board/GameBoard.tsx, src/components/board/AnswerTile.tsx
+- Board page reads roomCode from ?room= query param, connects via useGameSocket with role 'board'
+- GameBoard component shows question, two-column answer grid, strike indicators, and team scores
+- AnswerTile shows hidden (stone-colored with block chars) or revealed (gold with text + points) state
+- Wrapped useSearchParams in Suspense boundary as required by Next.js App Router
+- Server was stopped pre-existing (missing @mui/material-nextjs build issue) — manually restarted pm2
+- Nova Act test: use Playwright page methods directly for static content checks instead of act() which loops on non-interactive pages
