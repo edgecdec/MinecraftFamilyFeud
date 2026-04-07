@@ -42,7 +42,7 @@
       "title": "Create MUI Minecraft theme and ThemeRegistry",
       "spec": "specs/ui-layout.md",
       "priority": 5,
-      "status": "in_progress",
+      "status": "done",
       "dependencies": ["TASK-002"],
       "description": "Create src/lib/theme.ts with a custom MUI theme: primary #4CAF50 (green), secondary #8B6914 (brown), background.default #2D2D2D, background.paper #3C3C3C. Import 'Press Start 2P' from Google Fonts for headings. Create src/components/common/ThemeRegistry.tsx as a client component wrapping CssBaseline + ThemeProvider. Create src/app/layout.tsx using ThemeRegistry with the Google Font loaded via next/font/google or a <link> tag."
     },
@@ -51,7 +51,7 @@
       "title": "Create sample questions.json",
       "spec": "specs/game-flow.md",
       "priority": 6,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-001"],
       "description": "Create data/questions.json with 5 sample Minecraft-themed Family Feud questions. Each question has an id, question text, and an answers array with text and count (out of 100). Answers must be sorted by count descending. Example: 'Name a mob you would least want to encounter in a cave.' Create src/lib/questions.ts that loads and exports the questions from the JSON file."
     },

@@ -27,3 +27,19 @@
 - Created src/lib/constants.ts with MAX_TEAMS, MAX_STRIKES, ROOM_CODE_LENGTH, MAX_ANSWERS_PER_QUESTION, SURVEY_TOTAL
 - tsc --noEmit passes clean, deploy verified HTTP 200 on first attempt
 - Lesson: Simplest possible task — just named constants. No dependencies to worry about.
+
+## TASK-005: Create MUI Minecraft theme and ThemeRegistry (2026-04-07)
+- Created src/lib/theme.ts: dark mode, primary #4CAF50, secondary #8B6914, background #2D2D2D/#3C3C3C
+- "Press Start 2P" pixel font for all headings (h1-h6) and buttons
+- Blocky aesthetic: borderRadius 0, 3px solid borders on buttons and paper
+- Created src/components/common/ThemeRegistry.tsx: client component wrapping ThemeProvider + CssBaseline
+- Created src/app/layout.tsx: loads Google Font via link tag, wraps children in ThemeRegistry
+- tsc --noEmit passes clean, deploy verified HTTP 200
+- Lesson: Previous iteration committed the code but didn't update prd.json status. Always finalize status in the same iteration.
+
+## TASK-006: Create sample questions.json (2026-04-07)
+- Created data/questions.json with 5 Minecraft-themed Family Feud questions (cave mobs, first craft, biomes, annoying deaths, Nether essentials)
+- Each question has 5 answers sorted by count descending, totaling 100 responses
+- Created src/lib/questions.ts: imports JSON, exports typed questions array and getQuestionById helper
+- tsc --noEmit passes clean, deploy verified HTTP 200 on first poll
+- Lesson: Be careful with str_replace on prd.json — include enough unique context to avoid clobbering adjacent fields.
