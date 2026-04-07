@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
+import { Suspense, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -15,7 +15,7 @@ function triggerVibration() {
   }
 }
 
-export default function BuzzerPage() {
+function BuzzerContent() {
   const params = useSearchParams();
   const roomCode = params.get('room');
   const teamName = params.get('team');
@@ -139,5 +139,13 @@ export default function BuzzerPage() {
         </Typography>
       )}
     </Box>
+  );
+}
+
+export default function BuzzerPage() {
+  return (
+    <Suspense>
+      <BuzzerContent />
+    </Suspense>
   );
 }
