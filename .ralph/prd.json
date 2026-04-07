@@ -6,7 +6,7 @@
       "title": "Initialize Next.js project manually",
       "spec": "specs/deployment.md",
       "priority": 1,
-      "status": "open",
+      "status": "done",
       "dependencies": [],
       "description": "DO NOT use create-next-app. Manually create: package.json with next/react/react-dom deps and scripts (dev, build, start), tsconfig.json with strict mode and @/ path alias pointing to src/, next.config.js (empty config). Create directory structure: src/app/, src/components/, src/lib/, src/hooks/, src/types/, data/, public/. Then run npm install."
     },

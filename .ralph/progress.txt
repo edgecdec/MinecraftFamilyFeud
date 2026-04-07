@@ -1,1 +1,8 @@
 # Ralph Progress Log — MinecraftFamilyFeud
+
+## TASK-001: Initialize Next.js project manually (2026-04-07)
+- Created package.json, tsconfig.json, next.config.js manually (no create-next-app)
+- Set up directory structure: src/app, src/components (common/board/host/buzzer), src/lib, src/hooks, src/types, data, public
+- Minimal page.tsx and layout.tsx for Next.js App Router
+- tsc --noEmit passes clean
+- Lesson: server.js, deploy_webhook.sh, .gitignore already existed — only needed to add Next.js config files and directory structure
