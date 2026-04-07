@@ -43,3 +43,12 @@
 - Created src/lib/questions.ts: imports JSON, exports typed questions array and getQuestionById helper
 - tsc --noEmit passes clean, deploy verified HTTP 200 on first poll
 - Lesson: Be careful with str_replace on prd.json — include enough unique context to avoid clobbering adjacent fields.
+
+## TASK-007: Implement core game manager — create, join, state
+- Date: 2026-04-07
+- Used functional exports instead of a class — simpler, no `this` binding issues, and aligns with the module pattern used elsewhere in the project.
+- Module-level `Map<string, GameState>` stores active games. Works fine for in-memory ephemeral state.
+- `generateRoomCode()` loops until unique — simple and sufficient for low game counts.
+- Validation in `joinTeam`: checks room exists, game in lobby phase, not full, no duplicate team names.
+- `removeGame()` added for cleanup when host disconnects (will be used by socket handler later).
+- TypeScript passed first try — types from TASK-003 were well-defined.

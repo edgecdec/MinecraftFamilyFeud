@@ -60,7 +60,7 @@
       "title": "Implement core game manager — create, join, state",
       "spec": "specs/game-flow.md",
       "priority": 7,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-003", "TASK-004", "TASK-006"],
       "description": "Create src/lib/game.ts with a GameManager class. Implement: createGame() generates a unique 4-letter room code and initializes GameState in 'lobby' phase, joinTeam(roomCode, teamName) adds a team (max 2), getState(roomCode) returns current state, endGame(roomCode) sets phase to 'gameOver', adjustScore(roomCode, teamName, delta) for manual corrections. Store active games in a Map<string, GameState>. Clean up games when ended."
     },
