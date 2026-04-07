@@ -73,3 +73,13 @@
 - Imported MAX_STRIKES constant (was previously unused)
 - tsc --noEmit passes clean, deploy verified HTTP 200 on first poll
 - Lesson: Steal logic needs careful attention to which team gets points — the stealing team is the opposite of controllingTeamIndex
+
+## TASK-010: Wire Socket.io events in server.js
+- Date: 2026-04-07
+- Created lib/gameManager.js (CommonJS) mirroring src/lib/game.ts logic for server.js runtime use
+- server.js cannot import TypeScript files with @/ path aliases, so a CJS game manager is needed
+- Wired all 14 client-to-server events and all server-to-client broadcasts per socket-events spec
+- Used socketMeta Map to track each socket's roomCode, role, and teamName
+- resolveFaceoff is called both during faceoffAnswer (auto-resolve) and playOrPass (to get winner) — it's read-only so safe to call twice
+- Deployment verified: HTTP 200 on remote server after push
+- Lesson: Next.js custom server.js is CommonJS — game logic used only server-side needs a CJS copy. The TS version remains for type-checking only.

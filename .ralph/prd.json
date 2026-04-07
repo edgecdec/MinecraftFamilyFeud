@@ -87,7 +87,7 @@
       "title": "Wire Socket.io events in server.js",
       "spec": "specs/socket-events.md",
       "priority": 10,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-009"],
       "description": "Update server.js to import and instantiate GameManager. Add Socket.io server with all client-to-server event handlers from the socket-events spec. Each handler should call the appropriate GameManager method, then broadcast game:state plus the granular event to the game room. Handle errors by emitting the error event back to the sender. Teams and board clients join the socket room on connect."
     },
