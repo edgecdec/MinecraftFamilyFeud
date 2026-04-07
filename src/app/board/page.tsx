@@ -10,7 +10,7 @@ import GameBoard from '@/components/board/GameBoard';
 function BoardContent() {
   const searchParams = useSearchParams();
   const roomCode = searchParams.get('room');
-  const { gameState, connectionStatus } = useGameSocket(roomCode, 'board');
+  const { gameState, lastEvent, connectionStatus } = useGameSocket(roomCode, 'board');
 
   if (!roomCode) {
     return (
@@ -28,7 +28,7 @@ function BoardContent() {
     );
   }
 
-  return <GameBoard gameState={gameState} />;
+  return <GameBoard gameState={gameState} lastEvent={lastEvent} />;
 }
 
 export default function BoardPage() {

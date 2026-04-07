@@ -168,7 +168,7 @@
       "title": "Answer reveal flip animation on board",
       "spec": "specs/ui-layout.md",
       "priority": 19,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-013"],
       "description": "Add a CSS flip animation to the board view answer tiles. When an answer is revealed (game:answerRevealed event), the tile should flip from the hidden stone-colored state to the revealed gold state showing the answer text and point value. Use CSS transform rotateX with a transition. The animation should trigger on the granular event, not on state change."
     },

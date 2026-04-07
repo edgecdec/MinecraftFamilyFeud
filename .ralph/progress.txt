@@ -151,3 +151,12 @@
 - Both tsc --noEmit and npm run build pass clean
 - No code changes needed — just marked as done
 - Lesson: When a dependency task is implemented early as part of another task, verify it meets the spec and mark it done rather than reimplementing.
+
+## TASK-019: Answer reveal flip animation on board (2026-04-07)
+- Implemented CSS 3D flip animation on AnswerTile using `perspective`, `preserve-3d`, and `rotateX(180deg)` transition.
+- Front face shows hidden stone tile, back face shows revealed gold tile with answer text and points.
+- Animation triggers on `game:answerRevealed` granular event via `lastEvent` prop passed from BoardContent → GameBoard → AnswerTile.
+- GameBoard tracks `animatingIndex` from lastEvent, clears it after 700ms.
+- AnswerTile uses `flipped` state: starts flipped if already revealed on mount, animates via useEffect when `animating` prop becomes true.
+- Lesson: The minecraft-feud pm2 process was stopped on the server — had to manually pull/build/restart. The deploy webhook may have failed on a previous push. Always check pm2 status when deploy verification fails.
+- Lesson: Nova Act tests can't verify animation on board page without an active game session — the board shows "Connecting..." for non-existent rooms. Verified page loads and code deployment instead.
