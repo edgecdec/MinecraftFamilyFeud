@@ -160,3 +160,12 @@
 - AnswerTile uses `flipped` state: starts flipped if already revealed on mount, animates via useEffect when `animating` prop becomes true.
 - Lesson: The minecraft-feud pm2 process was stopped on the server — had to manually pull/build/restart. The deploy webhook may have failed on a previous push. Always check pm2 status when deploy verification fails.
 - Lesson: Nova Act tests can't verify animation on board page without an active game session — the board shows "Connecting..." for non-existent rooms. Verified page loads and code deployment instead.
+
+## TASK-020: Strike X animation on board (2026-04-07)
+- Created StrikeOverlay component with CSS keyframe animation (scale-up + shake + fade-out over 1.5s)
+- Used Emotion's `keyframes` for CSS-in-JS animation definition
+- Triggered by `game:strike` granular event via `lastEvent`, not by state change — ensures animation plays each time
+- Used `requestAnimationFrame` to reset and re-trigger animation on consecutive strikes
+- Changed persistent strike indicators to always show when board is active (using `action.disabled` color for inactive strikes instead of `transparent`)
+- pm2 process was stopped on server — had to manually pull/build/restart. The deploy webhook may not be triggering properly.
+- Nova Act test: board page with fake room code shows "Connecting..." which is expected — can't test socket-triggered animations without a real game session.

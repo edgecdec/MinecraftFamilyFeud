@@ -177,7 +177,7 @@
       "title": "Strike X animation on board",
       "spec": "specs/ui-layout.md",
       "priority": 20,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-013"],
       "description": "Add a strike animation to the board view. When a game:strike event fires, display a large red X that scales up from the center of the board with a brief shake animation, then fades out after 1.5 seconds. Show the current strike count (1-3) persistently near the board. Use CSS keyframes for the animation."
     },

@@ -7,6 +7,7 @@ import { MAX_STRIKES } from '@/lib/constants';
 import type { GameState } from '@/types';
 import type { GameEvent } from '@/hooks/useGameSocket';
 import AnswerTile from './AnswerTile';
+import StrikeOverlay from './StrikeOverlay';
 
 const ANIMATION_DURATION_MS = 700;
 
@@ -19,6 +20,7 @@ export default function GameBoard({ gameState, lastEvent }: GameBoardProps) {
   const { currentQuestion, revealedAnswers, teams, scores, strikes, phase } = gameState;
   const answers = currentQuestion?.answers ?? [];
   const [animatingIndex, setAnimatingIndex] = useState<number | null>(null);
+  const [strikeAnimating, setStrikeAnimating] = useState(false);
 
   useEffect(() => {
     if (lastEvent?.event === 'game:answerRevealed') {
@@ -26,6 +28,10 @@ export default function GameBoard({ gameState, lastEvent }: GameBoardProps) {
       setAnimatingIndex(answerIndex);
       const timer = setTimeout(() => setAnimatingIndex(null), ANIMATION_DURATION_MS);
       return () => clearTimeout(timer);
+    }
+    if (lastEvent?.event === 'game:strike') {
+      setStrikeAnimating(false);
+      requestAnimationFrame(() => setStrikeAnimating(true));
     }
   }, [lastEvent]);
 
@@ -68,13 +74,15 @@ export default function GameBoard({ gameState, lastEvent }: GameBoardProps) {
       )}
 
       {/* Strikes */}
-      {showBoard && strikes > 0 && (
+      {showBoard && (
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 2 }}>
           {Array.from({ length: MAX_STRIKES }).map((_, i) => (
-            <Typography key={i} variant="h3" sx={{ color: i < strikes ? 'error.main' : 'transparent', fontSize: '2.5rem' }}>✕</Typography>
+            <Typography key={i} variant="h3" sx={{ color: i < strikes ? 'error.main' : 'action.disabled', fontSize: '2.5rem' }}>✕</Typography>
           ))}
         </Box>
       )}
+
+      <StrikeOverlay visible={strikeAnimating} />
 
       {/* Scores */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', px: 2 }}>
