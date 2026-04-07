@@ -137,3 +137,9 @@
 - ScoreAdjust: +/- buttons for manual score correction on all phases
 - MUI v7 Stack doesn't accept alignItems/justifyContent as direct props — must use sx prop
 - pm2 process was stopped on server (pre-existing issue with missing @mui/material-nextjs) — manual restart fixed it
+
+## TASK-017: Build buzzer view for teams (2026-04-07)
+- Status: DONE
+- The buzzer page implementation was already complete from a previous attempt but failed build due to missing Suspense boundary around useSearchParams().
+- Fix: Renamed component to BuzzerContent, wrapped in Suspense via a BuzzerPage default export — same pattern used by board/page.tsx and host/page.tsx.
+- Lesson: Next.js 15 requires useSearchParams() to be inside a Suspense boundary for static generation. Always follow the existing project pattern (inner Content component + outer Suspense wrapper).
