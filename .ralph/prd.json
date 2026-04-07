@@ -96,7 +96,7 @@
       "title": "Create useGameSocket hook",
       "spec": "specs/socket-events.md",
       "priority": 11,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-003", "TASK-005"],
       "description": "Create src/hooks/useGameSocket.ts — a custom hook that connects to the Socket.io server, listens for game:state and all granular events, and exposes: gameState, lastEvent (for animation triggers), and emit functions for all client-to-server events. Handle connect/disconnect/error states. The hook should accept a roomCode and role ('host'|'team'|'board') parameter."
     },

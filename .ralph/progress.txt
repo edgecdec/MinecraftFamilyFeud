@@ -83,3 +83,11 @@
 - resolveFaceoff is called both during faceoffAnswer (auto-resolve) and playOrPass (to get winner) — it's read-only so safe to call twice
 - Deployment verified: HTTP 200 on remote server after push
 - Lesson: Next.js custom server.js is CommonJS — game logic used only server-side needs a CJS copy. The TS version remains for type-checking only.
+
+## TASK-011: Create useGameSocket hook (2026-04-07)
+- Status: DONE
+- Created src/hooks/useGameSocket.ts with Socket.io connection, game:state listener, granular event tracking via lastEvent, and typed emit function.
+- Lessons:
+  - Socket.io typed event listeners with a dynamic event name loop require `any` cast on the socket to avoid complex union type errors. Acceptable tradeoff for DRY code.
+  - The emit function needs a generic type parameter approach rather than trying to spread GameSocket['emit'] args directly — TypeScript can't infer tuple types from the spread.
+  - Server was returning 500 due to stale .next cache on remote — clearing .next and restarting pm2 fixed it. Not related to this task.
