@@ -14,8 +14,8 @@ node_modules/
 .env.production
 !.env.example
 
-# project data
-data/
+# project data (keep questions.json committed)
+data/*.db
 
 # ralph
 .ralph/.server-env

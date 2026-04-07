@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "Name a mob you'd least want to encounter in a cave",
+      "answers": [
+        { "text": "Creeper", "count": 42 },
+        { "text": "Warden", "count": 28 },
+        { "text": "Skeleton", "count": 15 },
+        { "text": "Spider", "count": 10 },
+        { "text": "Enderman", "count": 5 }
+      ],
+      "totalResponses": 100
+    },
+    {
+      "id": "q2",
+      "question": "What's the first thing you craft in a new survival world?",
+      "answers": [
+        { "text": "Wooden Pickaxe", "count": 38 },
+        { "text": "Crafting Table", "count": 30 },
+        { "text": "Wooden Sword", "count": 15 },
+        { "text": "Wooden Axe", "count": 10 },
+        { "text": "Planks", "count": 7 }
+      ],
+      "totalResponses": 100
+    },
+    {
+      "id": "q3",
+      "question": "Name a biome everyone wants to find",
+      "answers": [
+        { "text": "Mushroom Island", "count": 32 },
+        { "text": "Cherry Grove", "count": 24 },
+        { "text": "Jungle", "count": 18 },
+        { "text": "Mesa / Badlands", "count": 14 },
+        { "text": "Lush Caves", "count": 12 }
+      ],
+      "totalResponses": 100
+    },
+    {
+      "id": "q4",
+      "question": "What's the most annoying way to die in Minecraft?",
+      "answers": [
+        { "text": "Falling in Lava", "count": 35 },
+        { "text": "Creeper Explosion", "count": 25 },
+        { "text": "Falling Off a Cliff", "count": 18 },
+        { "text": "Killed by a Baby Zombie", "count": 12 },
+        { "text": "Suffocating in Gravel", "count": 10 }
+      ],
+      "totalResponses": 100
+    },
+    {
+      "id": "q5",
+      "question": "Name something you always bring to the Nether",
+      "answers": [
+        { "text": "Diamond Sword", "count": 28 },
+        { "text": "Cobblestone / Blocks", "count": 22 },
+        { "text": "Food", "count": 20 },
+        { "text": "Flint and Steel", "count": 18 },
+        { "text": "Gold Armor", "count": 12 }
+      ],
+      "totalResponses": 100
+    }
+  ]
+}
