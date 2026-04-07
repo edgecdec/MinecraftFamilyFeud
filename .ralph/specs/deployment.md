@@ -26,16 +26,16 @@ app.prepare().then(() => {
   const server = createServer(handler);
   const io = new Server(server);
   // Socket.io event handlers here
-  server.listen(3004);
+  server.listen(3005);
 });
 ```
 
 ### nginx
-Needs a server block proxying the domain to localhost:3004. Same pattern as other apps. This will be configured manually — not a ralph task.
+Needs a server block proxying the domain to localhost:3005. Same pattern as other apps. This will be configured manually — not a ralph task.
 
 ### pm2
 - Process name: `minecraft-feud`
-- Port: 3004
+- Port: 3005
 
 ### GitHub Webhook
 - URL: `http://<domain>/api/webhook`

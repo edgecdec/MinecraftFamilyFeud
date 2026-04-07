@@ -61,7 +61,7 @@ Single `server.js` process wraps Next.js and Socket.io together:
 const server = createServer(handler);
 const io = new Server(server);
 ```
-Port: 3004. Deployed to `/var/www/MinecraftFamilyFeud`, managed by pm2.
+Port: 3005. Deployed to `/var/www/MinecraftFamilyFeud`, managed by pm2.
 
 ## Theme
 
@@ -109,7 +109,7 @@ Connection details stored in `.ralph/.server-env` (gitignored). Same server as o
 - OS: Ubuntu 24.04, x86_64
 - Process manager: pm2
 - Other apps on same server: jeopardy (:3000), superconnections (:3001), marchmadness (:3002), discord-alt (:3003)
-- This app runs on port 3004.
+- This app runs on port 3005.
 
 ## Operational Notes
 
