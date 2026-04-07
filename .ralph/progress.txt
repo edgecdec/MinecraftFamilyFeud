@@ -6,3 +6,11 @@
 - Minimal page.tsx and layout.tsx for Next.js App Router
 - tsc --noEmit passes clean
 - Lesson: server.js, deploy_webhook.sh, .gitignore already existed — only needed to add Next.js config files and directory structure
+
+## TASK-002: Install all project dependencies (2026-04-07)
+- Installed production deps: @mui/material, @emotion/react, @emotion/styled, @mui/icons-material, socket.io, socket.io-client
+- Dev deps (@types/node, @types/react, @types/react-dom, typescript) were already present from TASK-001
+- MUI v9 was installed (latest), Emotion v11, Socket.io v4
+- tsc --noEmit passes clean
+- Deploy verified: HTTP 200 on first poll attempt
+- Lesson: npm install is straightforward — dev deps were already in place from project init

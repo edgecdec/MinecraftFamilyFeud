@@ -15,7 +15,7 @@
       "title": "Install all project dependencies",
       "spec": "specs/deployment.md",
       "priority": 2,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-001"],
       "description": "Install production deps: @mui/material @emotion/react @emotion/styled @mui/icons-material socket.io socket.io-client. Install dev deps: @types/node @types/react @types/react-dom typescript. No database or auth packages needed."
     },
