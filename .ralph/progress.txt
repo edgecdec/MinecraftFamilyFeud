@@ -120,3 +120,11 @@
 - Nova Act test confirmed host page loads with Room Code and Teams sections visible
 - Fixed pre-existing ThemeRegistry crash: removed `@mui/material-nextjs/v15-appRouter` import that failed during production build. Simplified to plain ThemeProvider.
 - Deploy webhook was pulling stale commit after force-push; had to manually `git fetch && git reset --hard` on server, then `npm run build && pm2 restart`.
+
+## TASK-015: Build host face-off controls (2026-04-07)
+- Created FaceoffControls component with contextual steps: Open Buzzer → buzz status → answer entry per team → winner display → Play/Pass buttons
+- Extracted FaceoffAnswerSelect as a sub-component for answer dropdowns with "Not on board" option
+- The emit function type must match the generic signature from useGameSocket — using `<E extends keyof ClientToServerEvents>` not loose `string`
+- Used lastEvent to capture faceoff winner from game:faceoffResult event since gameState doesn't store the winner directly
+- pm2 process was stopped from a previous crash; had to manually restart after npm install
+- Nova Act test can only verify page loads since faceoff controls require an active game session with 2 teams

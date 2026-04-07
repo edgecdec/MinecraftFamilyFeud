@@ -6,6 +6,7 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useGameSocket } from '@/hooks/useGameSocket';
+import FaceoffControls from '@/components/host/FaceoffControls';
 import QuestionSelector from '@/components/host/QuestionSelector';
 
 const HOST_PIN = '0000';
@@ -46,6 +47,7 @@ export default function HostPanel() {
   const teams = gameState?.teams ?? [];
   const scores = gameState?.scores ?? {};
   const isLobby = phase === 'lobby' || phase === 'roundEnd';
+  const isFaceoff = phase === 'faceoff' || phase === 'faceoff-resolve';
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', p: 3 }}>
@@ -100,8 +102,13 @@ export default function HostPanel() {
           <QuestionSelector onSelect={handleSelectQuestion} disabled={teams.length < 1} />
         )}
 
-        {/* Current phase indicator */}
-        {!isLobby && (
+        {/* Face-off controls */}
+        {isFaceoff && gameState && (
+          <FaceoffControls gameState={gameState} lastEvent={lastEvent} emit={emit} />
+        )}
+
+        {/* Current phase indicator — non-lobby, non-faceoff phases */}
+        {!isLobby && !isFaceoff && (
           <Box sx={{ bgcolor: 'background.paper', p: 2, border: '3px solid', borderColor: 'divider', textAlign: 'center' }}>
             <Typography sx={{ color: 'text.secondary', fontSize: '0.75rem', mb: 0.5 }}>
               Current Phase

@@ -132,7 +132,7 @@
       "title": "Build host face-off controls",
       "spec": "specs/ui-layout.md",
       "priority": 15,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-014"],
       "description": "Add face-off controls to the host page, shown when phase is 'faceoff' or 'faceoff-resolve'. Include: 'Open Buzzer' button to start the face-off, display of which teams have buzzed, answer entry for each team's face-off guess (dropdown of board answers + 'Not on board' option), display of face-off winner, and Play/Pass buttons for the winning team's choice. Controls should be contextual — only show what's relevant for the current face-off step."
     },
