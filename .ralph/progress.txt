@@ -14,3 +14,11 @@
 - tsc --noEmit passes clean
 - Deploy verified: HTTP 200 on first poll attempt
 - Lesson: npm install is straightforward — dev deps were already in place from project init
+## TASK-003: Create TypeScript types for game state and socket events (2026-04-07)
+- Created src/types/game.ts: Team, Answer, Question, FaceoffState, GamePhase, GameState
+- Created src/types/socket.ts: ClientToServerEvents, ServerToClientEvents with all events from socket-events spec
+- Created src/types/index.ts re-exporting all types
+- Used Record<string, never> for empty payloads instead of {} (cleaner TypeScript)
+- Extracted GamePhase as a union type for reuse
+- tsc --noEmit passes clean, deploy verified HTTP 200
+- Lesson: Straightforward type-only task. No runtime code needed.

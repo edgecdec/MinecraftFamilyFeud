@@ -24,7 +24,7 @@
       "title": "Create TypeScript types for game state and socket events",
       "spec": "specs/socket-events.md",
       "priority": 3,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-001"],
       "description": "Create src/types/game.ts with interfaces: Team, Answer, Question, GameState, FaceoffState. Create src/types/socket.ts with ClientToServerEvents and ServerToClientEvents interfaces covering all events in the socket-events spec. Create src/types/index.ts re-exporting everything."
     },
