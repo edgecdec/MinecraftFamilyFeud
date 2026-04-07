@@ -150,7 +150,7 @@
       "title": "Build buzzer view for teams",
       "spec": "specs/ui-layout.md",
       "priority": 17,
-      "status": "open",
+      "status": "in_progress",
       "dependencies": ["TASK-011"],
       "description": "Create src/app/buzzer/page.tsx — the mobile buzzer. Reads room and team from query params. On load, emit team:join. Shows team name at top. Giant buzz button filling most of the screen. Button states: disabled/gray when buzzer is locked, bright green 'BUZZ!' when active (faceoff phase), changes to team color after buzzing. Shows 'WAIT' text when not in buzzer phase. Vibration feedback on mobile when buzzer opens (navigator.vibrate). Mobile-first, full-screen design."
     },
