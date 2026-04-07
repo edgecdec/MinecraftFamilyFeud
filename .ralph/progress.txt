@@ -61,3 +61,15 @@
 - Face-off answers auto-reveal on the board and accumulate roundPoints during the faceoff itself
 - Phase transitions: lobby→faceoff (startFaceoff), faceoff→faceoff-resolve (both answered), faceoff-resolve→playing (playOrPass)
 - Lessons: Keep return types explicit when a function returns more than just GameState (resolveFaceoff returns winner info too)
+
+## TASK-009: Implement playing and steal logic in game manager (2026-04-07)
+- Added 5 exported functions: revealAnswer, strike, stealAttempt, revealRemaining, endRound
+- Added private allAnswersRevealed() helper to check if all answers have been revealed
+- revealAnswer: validates phase/index/duplicates, adds points, auto-transitions to roundEnd if all revealed
+- strike: increments strikes, transitions to steal phase at MAX_STRIKES (3)
+- stealAttempt: if answerIndex provided (correct steal), stealing team gets all roundPoints; if null (wrong), controlling team keeps them. Always transitions to roundEnd and zeroes roundPoints.
+- revealRemaining: reveals all hidden answers (used after steal resolves for display purposes)
+- endRound: handles both roundEnd and playing phases — awards points to controlling team if ending during play
+- Imported MAX_STRIKES constant (was previously unused)
+- tsc --noEmit passes clean, deploy verified HTTP 200 on first poll
+- Lesson: Steal logic needs careful attention to which team gets points — the stealing team is the opposite of controllingTeamIndex

@@ -78,7 +78,7 @@
       "title": "Implement playing and steal logic in game manager",
       "spec": "specs/game-flow.md",
       "priority": 9,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-008"],
       "description": "Add playing/steal methods to GameManager: revealAnswer(roomCode, answerIndex) reveals an answer and adds its points to roundPoints, strike(roomCode) increments strikes and transitions to 'steal' phase at 3 strikes, stealAttempt(roomCode, answerIndex|null) resolves the steal — if correct the stealing team gets roundPoints, if wrong the controlling team keeps them, revealRemaining(roomCode) reveals all hidden answers, endRound(roomCode) awards roundPoints to the winning team's score and transitions to 'roundEnd'. All answers revealed during play should auto-end the round."
     },

@@ -1,5 +1,5 @@
 import type { GameState } from '@/types/game';
-import { MAX_TEAMS, ROOM_CODE_LENGTH } from '@/lib/constants';
+import { MAX_TEAMS, MAX_STRIKES, ROOM_CODE_LENGTH } from '@/lib/constants';
 import { getQuestionById } from '@/lib/questions';
 
 const ROOM_CODE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -197,6 +197,109 @@ export function playOrPass(
   state.controllingTeamIndex = choice === 'play' ? winnerIndex : otherIndex;
   state.phase = 'playing';
   state.faceoff = null;
+  return state;
+}
+
+function allAnswersRevealed(state: GameState): boolean {
+  return (
+    state.currentQuestion !== null &&
+    state.revealedAnswers.length >= state.currentQuestion.answers.length
+  );
+}
+
+export function revealAnswer(
+  roomCode: string,
+  answerIndex: number
+): GameState {
+  const state = getGame(roomCode);
+  if (state.phase !== 'playing') throw new Error('Not in playing phase');
+  if (!state.currentQuestion) throw new Error('No current question');
+  if (answerIndex < 0 || answerIndex >= state.currentQuestion.answers.length)
+    throw new Error('Invalid answer index');
+  if (state.revealedAnswers.includes(answerIndex))
+    throw new Error('Answer already revealed');
+
+  state.revealedAnswers.push(answerIndex);
+  state.roundPoints += state.currentQuestion.answers[answerIndex].count;
+
+  if (allAnswersRevealed(state)) {
+    state.phase = 'roundEnd';
+  }
+
+  return state;
+}
+
+export function strike(roomCode: string): GameState {
+  const state = getGame(roomCode);
+  if (state.phase !== 'playing') throw new Error('Not in playing phase');
+
+  state.strikes += 1;
+
+  if (state.strikes >= MAX_STRIKES) {
+    state.phase = 'steal';
+  }
+
+  return state;
+}
+
+export function stealAttempt(
+  roomCode: string,
+  answerIndex: number | null
+): GameState {
+  const state = getGame(roomCode);
+  if (state.phase !== 'steal') throw new Error('Not in steal phase');
+  if (!state.currentQuestion) throw new Error('No current question');
+
+  const stealingTeamIndex = state.controllingTeamIndex === 0 ? 1 : 0;
+  const stealingTeamName = state.teams[stealingTeamIndex].name;
+  const controllingTeamName = state.teams[state.controllingTeamIndex].name;
+
+  if (answerIndex !== null) {
+    if (answerIndex < 0 || answerIndex >= state.currentQuestion.answers.length)
+      throw new Error('Invalid answer index');
+    if (state.revealedAnswers.includes(answerIndex))
+      throw new Error('Answer already revealed');
+
+    // Successful steal — reveal the answer and award all round points to stealing team
+    state.revealedAnswers.push(answerIndex);
+    state.roundPoints += state.currentQuestion.answers[answerIndex].count;
+    state.scores[stealingTeamName] += state.roundPoints;
+  } else {
+    // Failed steal — controlling team keeps the points
+    state.scores[controllingTeamName] += state.roundPoints;
+  }
+
+  state.roundPoints = 0;
+  state.phase = 'roundEnd';
+  return state;
+}
+
+export function revealRemaining(roomCode: string): GameState {
+  const state = getGame(roomCode);
+  if (!state.currentQuestion) throw new Error('No current question');
+
+  for (let i = 0; i < state.currentQuestion.answers.length; i++) {
+    if (!state.revealedAnswers.includes(i)) {
+      state.revealedAnswers.push(i);
+    }
+  }
+
+  return state;
+}
+
+export function endRound(roomCode: string): GameState {
+  const state = getGame(roomCode);
+  if (state.phase !== 'roundEnd' && state.phase !== 'playing')
+    throw new Error('Cannot end round in current phase');
+
+  // If ending during playing (all answers revealed), award points to controlling team
+  if (state.phase === 'playing' && state.roundPoints > 0) {
+    const controllingTeamName = state.teams[state.controllingTeamIndex].name;
+    state.scores[controllingTeamName] += state.roundPoints;
+  }
+
+  state.roundPoints = 0;
+  state.phase = 'roundEnd';
   return state;
 }
 
