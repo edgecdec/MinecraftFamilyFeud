@@ -110,3 +110,13 @@
 - Wrapped useSearchParams in Suspense boundary as required by Next.js App Router
 - Server was stopped pre-existing (missing @mui/material-nextjs build issue) — manually restarted pm2
 - Nova Act test: use Playwright page methods directly for static content checks instead of act() which loops on non-interactive pages
+
+## TASK-014: Build host lobby and question selector (2026-04-07)
+- Created `/api/questions` route (needed by host page, TASK-018 can mark as done or extend)
+- Created `HostPanel` component with room code display, teams list, scores, and question selector
+- Created `QuestionSelector` component that fetches from `/api/questions`
+- MUI v7 Stack doesn't accept `justifyContent` as a direct prop — must use `sx`
+- Server was stopped due to pre-existing `@mui/material-nextjs` build error; manual pm2 restart fixed it
+- Nova Act test confirmed host page loads with Room Code and Teams sections visible
+- Fixed pre-existing ThemeRegistry crash: removed `@mui/material-nextjs/v15-appRouter` import that failed during production build. Simplified to plain ThemeProvider.
+- Deploy webhook was pulling stale commit after force-push; had to manually `git fetch && git reset --hard` on server, then `npm run build && pm2 restart`.

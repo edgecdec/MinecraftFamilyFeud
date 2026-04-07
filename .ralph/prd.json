@@ -123,7 +123,7 @@
       "title": "Build host lobby and question selector",
       "spec": "specs/ui-layout.md",
       "priority": 14,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-011"],
       "description": "Create src/app/host/page.tsx — the host control panel. On load, emit host:create to get a room code. Display room code prominently for sharing. Show connected teams list. Include a question selector that fetches available questions from /api/questions and lets the host pick one to start a round. Show current game scores. Desktop-optimized layout. This page will be extended in subsequent tasks with phase-specific controls."
     },
