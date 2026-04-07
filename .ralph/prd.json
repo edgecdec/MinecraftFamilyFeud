@@ -33,7 +33,7 @@
       "title": "Create game constants",
       "spec": "specs/game-flow.md",
       "priority": 4,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-001"],
       "description": "Create src/lib/constants.ts with all game constants: MAX_TEAMS (2), MAX_STRIKES (3), ROOM_CODE_LENGTH (4), MAX_ANSWERS_PER_QUESTION (8), SURVEY_TOTAL (100). These must be referenced everywhere — no magic numbers."
     },

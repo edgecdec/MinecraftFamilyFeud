@@ -22,3 +22,8 @@
 - Extracted GamePhase as a union type for reuse
 - tsc --noEmit passes clean, deploy verified HTTP 200
 - Lesson: Straightforward type-only task. No runtime code needed.
+
+## TASK-004: Create game constants (2026-04-07)
+- Created src/lib/constants.ts with MAX_TEAMS, MAX_STRIKES, ROOM_CODE_LENGTH, MAX_ANSWERS_PER_QUESTION, SURVEY_TOTAL
+- tsc --noEmit passes clean, deploy verified HTTP 200 on first attempt
+- Lesson: Simplest possible task — just named constants. No dependencies to worry about.
