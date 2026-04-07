@@ -178,3 +178,12 @@
 - Lesson: The mute toggle must be visible even in the "Connecting..." state, not just after game state loads — otherwise it's inaccessible before a game starts.
 - Lesson: Force-push causes divergent branches on the server — need `git reset --hard origin/main` on server after force-with-lease pushes.
 - Lesson: The minecraft-feud pm2 process was stopped before this task — had to manually rebuild and restart on server.
+
+## TASK-022: First deploy to server (2026-04-07)
+- Server already had the repo cloned and pm2 process configured (stopped) from a previous manual setup.
+- Pulled latest, rebuilt, and started pm2. App returned 200 on localhost:3005 immediately.
+- Public URL https://minecraftfamilyfeud.edgecdec.com also returns 200 (nginx proxy already configured).
+- Webhook auto-deploy verified: pushed a commit, app went down briefly during rebuild (~60s), then came back up.
+- A human concurrently pushed a webhook fix (nohup for deploy script so pm2 stop doesn't kill it).
+- Nova Act browser test confirmed landing page loads with title, heading, Host/Join buttons all present.
+- Lesson: The deploy script stops pm2 before git pull/build, so there's ~60s downtime per deploy. The nohup fix was needed because pm2 stop was killing the deploy script's own process.

@@ -1,7 +1,7 @@
 const { createServer } = require("http");
 const { parse } = require("url");
 const { createHmac } = require("crypto");
-const { execFile } = require("child_process");
+const { exec } = require("child_process");
 const path = require("path");
 const next = require("next");
 const { Server } = require("socket.io");
@@ -51,10 +51,8 @@ app.prepare().then(() => {
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ ok: true }));
       const script = path.join(__dirname, "deploy_webhook.sh");
-      execFile("bash", [script], (err, stdout, stderr) => {
+      exec(`nohup bash ${script} > /dev/null 2>&1 &`, (err) => {
         if (err) console.error("Deploy script error:", err.message);
-        if (stdout) console.log("Deploy stdout:", stdout);
-        if (stderr) console.error("Deploy stderr:", stderr);
       });
       return;
     }
