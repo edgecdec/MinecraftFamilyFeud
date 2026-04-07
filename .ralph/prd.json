@@ -159,7 +159,7 @@
       "title": "Add API route to serve questions list",
       "spec": "specs/game-flow.md",
       "priority": 18,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-006"],
       "description": "Create src/app/api/questions/route.ts — GET handler that returns the list of questions from data/questions.json. Returns only id and question text (not answers) so the host can select questions without seeing answers. The full question data is only used server-side by the GameManager."
     },

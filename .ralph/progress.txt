@@ -143,3 +143,11 @@
 - The buzzer page implementation was already complete from a previous attempt but failed build due to missing Suspense boundary around useSearchParams().
 - Fix: Renamed component to BuzzerContent, wrapped in Suspense via a BuzzerPage default export — same pattern used by board/page.tsx and host/page.tsx.
 - Lesson: Next.js 15 requires useSearchParams() to be inside a Suspense boundary for static generation. Always follow the existing project pattern (inner Content component + outer Suspense wrapper).
+
+## TASK-018: Add API route to serve questions list (2026-04-07)
+- Status: DONE (already implemented)
+- The route at src/app/api/questions/route.ts was already created during TASK-014 (host page needed it to fetch questions for the question selector)
+- Route correctly returns only id and question text (not answers) via map over questionsData.questions
+- Both tsc --noEmit and npm run build pass clean
+- No code changes needed — just marked as done
+- Lesson: When a dependency task is implemented early as part of another task, verify it meets the spec and mark it done rather than reimplementing.
