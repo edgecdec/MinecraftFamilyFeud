@@ -91,3 +91,4 @@
   - Socket.io typed event listeners with a dynamic event name loop require `any` cast on the socket to avoid complex union type errors. Acceptable tradeoff for DRY code.
   - The emit function needs a generic type parameter approach rather than trying to spread GameSocket['emit'] args directly — TypeScript can't infer tuple types from the spread.
   - Server was returning 500 due to stale .next cache on remote — clearing .next and restarting pm2 fixed it. Not related to this task.
+  - NOTE: deploy_webhook.sh may need to `rm -rf .next` before restarting pm2 — the dev mode .next cache gets corrupted on git pull. Logged for future task consideration.

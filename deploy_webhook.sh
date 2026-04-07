@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -uo pipefail
 
 APP_DIR="/var/www/MinecraftFamilyFeud"
 LOG="/var/log/webhook_deploy_feud.log"
@@ -31,10 +31,17 @@ if [ "$OLD_PKG_HASH" != "$NEW_PKG_HASH" ]; then
   npm install
 fi
 
+pm2 stop "$PM2_NAME" 2>/dev/null || true
+
 rm -rf .next
-npm run build
+if npm run build; then
+  echo "Build succeeded, restarting..."
+  pm2 restart "$PM2_NAME" || pm2 start server.js --name "$PM2_NAME"
+  echo "Deploy finished: $(date)"
+else
+  echo "Build FAILED, restarting with old build..."
+  pm2 restart "$PM2_NAME" || pm2 start server.js --name "$PM2_NAME"
+  echo "Deploy failed: $(date)"
+fi
 
-pm2 restart "$PM2_NAME" || pm2 start server.js --name "$PM2_NAME"
-
-echo "Deploy finished: $(date)"
 echo "=========================================="
