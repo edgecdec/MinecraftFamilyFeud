@@ -128,3 +128,12 @@
 - Used lastEvent to capture faceoff winner from game:faceoffResult event since gameState doesn't store the winner directly
 - pm2 process was stopped from a previous crash; had to manually restart after npm install
 - Nova Act test can only verify page loads since faceoff controls require an active game session with 2 teams
+
+## TASK-016: Build host play and steal controls (2026-04-07)
+- Created PlayingControls.tsx with phase-specific UI for playing, steal, and roundEnd phases
+- Playing: answer reveal buttons, strike button with counter, controlling team indicator, round points
+- Steal: dropdown of remaining answers + "Wrong" option, stealing team indicator
+- RoundEnd: reveal remaining, next question, end game buttons
+- ScoreAdjust: +/- buttons for manual score correction on all phases
+- MUI v7 Stack doesn't accept alignItems/justifyContent as direct props — must use sx prop
+- pm2 process was stopped on server (pre-existing issue with missing @mui/material-nextjs) — manual restart fixed it

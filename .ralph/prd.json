@@ -141,7 +141,7 @@
       "title": "Build host play and steal controls",
       "spec": "specs/ui-layout.md",
       "priority": 16,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-015"],
       "description": "Add playing and steal controls to the host page. During 'playing' phase: show buttons for each unrevealed answer (to mark as correct), a strike button, current strike count, and controlling team indicator. During 'steal' phase: show which team is stealing, answer entry (dropdown of remaining answers + 'Wrong' option). During 'roundEnd': show round results, 'Reveal Remaining' button, 'Next Question' and 'End Game' buttons. Include manual score adjustment +/- buttons for each team."
     },
