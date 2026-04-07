@@ -1,4 +1,203 @@
 {
   "project": "MinecraftFamilyFeud",
-  "tasks": []
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "title": "Initialize Next.js project manually",
+      "spec": "specs/deployment.md",
+      "priority": 1,
+      "status": "open",
+      "dependencies": [],
+      "description": "DO NOT use create-next-app. Manually create: package.json with next/react/react-dom deps and scripts (dev, build, start), tsconfig.json with strict mode and @/ path alias pointing to src/, next.config.js (empty config). Create directory structure: src/app/, src/components/, src/lib/, src/hooks/, src/types/, data/, public/. Then run npm install."
+    },
+    {
+      "id": "TASK-002",
+      "title": "Install all project dependencies",
+      "spec": "specs/deployment.md",
+      "priority": 2,
+      "status": "open",
+      "dependencies": ["TASK-001"],
+      "description": "Install production deps: @mui/material @emotion/react @emotion/styled @mui/icons-material socket.io socket.io-client. Install dev deps: @types/node @types/react @types/react-dom typescript. No database or auth packages needed."
+    },
+    {
+      "id": "TASK-003",
+      "title": "Create TypeScript types for game state and socket events",
+      "spec": "specs/socket-events.md",
+      "priority": 3,
+      "status": "open",
+      "dependencies": ["TASK-001"],
+      "description": "Create src/types/game.ts with interfaces: Team, Answer, Question, GameState, FaceoffState. Create src/types/socket.ts with ClientToServerEvents and ServerToClientEvents interfaces covering all events in the socket-events spec. Create src/types/index.ts re-exporting everything."
+    },
+    {
+      "id": "TASK-004",
+      "title": "Create game constants",
+      "spec": "specs/game-flow.md",
+      "priority": 4,
+      "status": "open",
+      "dependencies": ["TASK-001"],
+      "description": "Create src/lib/constants.ts with all game constants: MAX_TEAMS (2), MAX_STRIKES (3), ROOM_CODE_LENGTH (4), MAX_ANSWERS_PER_QUESTION (8), SURVEY_TOTAL (100). These must be referenced everywhere — no magic numbers."
+    },
+    {
+      "id": "TASK-005",
+      "title": "Create MUI Minecraft theme and ThemeRegistry",
+      "spec": "specs/ui-layout.md",
+      "priority": 5,
+      "status": "open",
+      "dependencies": ["TASK-002"],
+      "description": "Create src/lib/theme.ts with a custom MUI theme: primary #4CAF50 (green), secondary #8B6914 (brown), background.default #2D2D2D, background.paper #3C3C3C. Import 'Press Start 2P' from Google Fonts for headings. Create src/components/common/ThemeRegistry.tsx as a client component wrapping CssBaseline + ThemeProvider. Create src/app/layout.tsx using ThemeRegistry with the Google Font loaded via next/font/google or a <link> tag."
+    },
+    {
+      "id": "TASK-006",
+      "title": "Create sample questions.json",
+      "spec": "specs/game-flow.md",
+      "priority": 6,
+      "status": "open",
+      "dependencies": ["TASK-001"],
+      "description": "Create data/questions.json with 5 sample Minecraft-themed Family Feud questions. Each question has an id, question text, and an answers array with text and count (out of 100). Answers must be sorted by count descending. Example: 'Name a mob you would least want to encounter in a cave.' Create src/lib/questions.ts that loads and exports the questions from the JSON file."
+    },
+    {
+      "id": "TASK-007",
+      "title": "Implement core game manager — create, join, state",
+      "spec": "specs/game-flow.md",
+      "priority": 7,
+      "status": "open",
+      "dependencies": ["TASK-003", "TASK-004", "TASK-006"],
+      "description": "Create src/lib/game.ts with a GameManager class. Implement: createGame() generates a unique 4-letter room code and initializes GameState in 'lobby' phase, joinTeam(roomCode, teamName) adds a team (max 2), getState(roomCode) returns current state, endGame(roomCode) sets phase to 'gameOver', adjustScore(roomCode, teamName, delta) for manual corrections. Store active games in a Map<string, GameState>. Clean up games when ended."
+    },
+    {
+      "id": "TASK-008",
+      "title": "Implement face-off logic in game manager",
+      "spec": "specs/game-flow.md",
+      "priority": 8,
+      "status": "open",
+      "dependencies": ["TASK-007"],
+      "description": "Add face-off methods to GameManager: startFaceoff(roomCode, questionId) loads the question and sets phase to 'faceoff', faceoffBuzz(roomCode, teamName) records buzz order, faceoffAnswer(roomCode, teamName, answerIndex|null) records each team's face-off guess and reveals the answer if on the board, resolveFaceoff(roomCode) determines the winner (higher-ranked answer wins, or only correct answer wins, or first buzzer if both wrong), playOrPass(roomCode, choice) sets controllingTeamIndex and transitions to 'playing' phase."
+    },
+    {
+      "id": "TASK-009",
+      "title": "Implement playing and steal logic in game manager",
+      "spec": "specs/game-flow.md",
+      "priority": 9,
+      "status": "open",
+      "dependencies": ["TASK-008"],
+      "description": "Add playing/steal methods to GameManager: revealAnswer(roomCode, answerIndex) reveals an answer and adds its points to roundPoints, strike(roomCode) increments strikes and transitions to 'steal' phase at 3 strikes, stealAttempt(roomCode, answerIndex|null) resolves the steal — if correct the stealing team gets roundPoints, if wrong the controlling team keeps them, revealRemaining(roomCode) reveals all hidden answers, endRound(roomCode) awards roundPoints to the winning team's score and transitions to 'roundEnd'. All answers revealed during play should auto-end the round."
+    },
+    {
+      "id": "TASK-010",
+      "title": "Wire Socket.io events in server.js",
+      "spec": "specs/socket-events.md",
+      "priority": 10,
+      "status": "open",
+      "dependencies": ["TASK-009"],
+      "description": "Update server.js to import and instantiate GameManager. Add Socket.io server with all client-to-server event handlers from the socket-events spec. Each handler should call the appropriate GameManager method, then broadcast game:state plus the granular event to the game room. Handle errors by emitting the error event back to the sender. Teams and board clients join the socket room on connect."
+    },
+    {
+      "id": "TASK-011",
+      "title": "Create useGameSocket hook",
+      "spec": "specs/socket-events.md",
+      "priority": 11,
+      "status": "open",
+      "dependencies": ["TASK-003", "TASK-005"],
+      "description": "Create src/hooks/useGameSocket.ts — a custom hook that connects to the Socket.io server, listens for game:state and all granular events, and exposes: gameState, lastEvent (for animation triggers), and emit functions for all client-to-server events. Handle connect/disconnect/error states. The hook should accept a roomCode and role ('host'|'team'|'board') parameter."
+    },
+    {
+      "id": "TASK-012",
+      "title": "Build landing page",
+      "spec": "specs/ui-layout.md",
+      "priority": 12,
+      "status": "open",
+      "dependencies": ["TASK-005"],
+      "description": "Create src/app/page.tsx — the landing page. Minecraft-styled title 'MINECRAFT FAMILY FEUD'. Two sections: 'Host a Game' button that navigates to /host, and 'Join a Game' with a room code input (4 chars uppercase) + team name input + join button that navigates to /buzzer?room=CODE&team=NAME. Mobile-friendly layout using MUI components and the Minecraft theme."
+    },
+    {
+      "id": "TASK-013",
+      "title": "Build board display view",
+      "spec": "specs/ui-layout.md",
+      "priority": 13,
+      "status": "open",
+      "dependencies": ["TASK-011"],
+      "description": "Create src/app/board/page.tsx — the projected game board. Full-screen display showing: question text at top, answer tiles in two columns (numbered, hidden as stone-colored tiles, revealed showing text + points), team scores at bottom left/right, strike indicators. Reads roomCode from query params. Uses useGameSocket with role 'board'. No interactive elements — display only. Must look good on a 1080p projector."
+    },
+    {
+      "id": "TASK-014",
+      "title": "Build host lobby and question selector",
+      "spec": "specs/ui-layout.md",
+      "priority": 14,
+      "status": "open",
+      "dependencies": ["TASK-011"],
+      "description": "Create src/app/host/page.tsx — the host control panel. On load, emit host:create to get a room code. Display room code prominently for sharing. Show connected teams list. Include a question selector that fetches available questions from /api/questions and lets the host pick one to start a round. Show current game scores. Desktop-optimized layout. This page will be extended in subsequent tasks with phase-specific controls."
+    },
+    {
+      "id": "TASK-015",
+      "title": "Build host face-off controls",
+      "spec": "specs/ui-layout.md",
+      "priority": 15,
+      "status": "open",
+      "dependencies": ["TASK-014"],
+      "description": "Add face-off controls to the host page, shown when phase is 'faceoff' or 'faceoff-resolve'. Include: 'Open Buzzer' button to start the face-off, display of which teams have buzzed, answer entry for each team's face-off guess (dropdown of board answers + 'Not on board' option), display of face-off winner, and Play/Pass buttons for the winning team's choice. Controls should be contextual — only show what's relevant for the current face-off step."
+    },
+    {
+      "id": "TASK-016",
+      "title": "Build host play and steal controls",
+      "spec": "specs/ui-layout.md",
+      "priority": 16,
+      "status": "open",
+      "dependencies": ["TASK-015"],
+      "description": "Add playing and steal controls to the host page. During 'playing' phase: show buttons for each unrevealed answer (to mark as correct), a strike button, current strike count, and controlling team indicator. During 'steal' phase: show which team is stealing, answer entry (dropdown of remaining answers + 'Wrong' option). During 'roundEnd': show round results, 'Reveal Remaining' button, 'Next Question' and 'End Game' buttons. Include manual score adjustment +/- buttons for each team."
+    },
+    {
+      "id": "TASK-017",
+      "title": "Build buzzer view for teams",
+      "spec": "specs/ui-layout.md",
+      "priority": 17,
+      "status": "open",
+      "dependencies": ["TASK-011"],
+      "description": "Create src/app/buzzer/page.tsx — the mobile buzzer. Reads room and team from query params. On load, emit team:join. Shows team name at top. Giant buzz button filling most of the screen. Button states: disabled/gray when buzzer is locked, bright green 'BUZZ!' when active (faceoff phase), changes to team color after buzzing. Shows 'WAIT' text when not in buzzer phase. Vibration feedback on mobile when buzzer opens (navigator.vibrate). Mobile-first, full-screen design."
+    },
+    {
+      "id": "TASK-018",
+      "title": "Add API route to serve questions list",
+      "spec": "specs/game-flow.md",
+      "priority": 18,
+      "status": "open",
+      "dependencies": ["TASK-006"],
+      "description": "Create src/app/api/questions/route.ts — GET handler that returns the list of questions from data/questions.json. Returns only id and question text (not answers) so the host can select questions without seeing answers. The full question data is only used server-side by the GameManager."
+    },
+    {
+      "id": "TASK-019",
+      "title": "Answer reveal flip animation on board",
+      "spec": "specs/ui-layout.md",
+      "priority": 19,
+      "status": "open",
+      "dependencies": ["TASK-013"],
+      "description": "Add a CSS flip animation to the board view answer tiles. When an answer is revealed (game:answerRevealed event), the tile should flip from the hidden stone-colored state to the revealed gold state showing the answer text and point value. Use CSS transform rotateX with a transition. The animation should trigger on the granular event, not on state change."
+    },
+    {
+      "id": "TASK-020",
+      "title": "Strike X animation on board",
+      "spec": "specs/ui-layout.md",
+      "priority": 20,
+      "status": "open",
+      "dependencies": ["TASK-013"],
+      "description": "Add a strike animation to the board view. When a game:strike event fires, display a large red X that scales up from the center of the board with a brief shake animation, then fades out after 1.5 seconds. Show the current strike count (1-3) persistently near the board. Use CSS keyframes for the animation."
+    },
+    {
+      "id": "TASK-021",
+      "title": "Sound effects",
+      "spec": "specs/ui-layout.md",
+      "priority": 21,
+      "status": "open",
+      "dependencies": ["TASK-013", "TASK-017"],
+      "description": "Add sound effects to the board and buzzer views. Board: correct answer ding on reveal, strike buzzer sound on strike, applause on round win. Buzzer: buzz sound when player buzzes in. Use short royalty-free sound files in public/sounds/. Use the Audio API to play sounds triggered by granular socket events. Keep sounds short (<2 seconds). Add a mute toggle on the board view."
+    },
+    {
+      "id": "TASK-022",
+      "title": "First deploy to server",
+      "spec": "specs/deployment.md",
+      "priority": 22,
+      "status": "open",
+      "dependencies": ["TASK-010", "TASK-012", "TASK-013", "TASK-016", "TASK-017"],
+      "description": "Commit and push all code. SSH into the server, cd to /var/www/MinecraftFamilyFeud, git pull, npm install, npm run build, pm2 start server.js --name minecraft-feud. Verify the site loads at https://minecraftfamilyfeud.edgecdec.com. Verify the webhook works by making a small change, pushing, and confirming auto-deploy."
+    }
+  ]
 }
