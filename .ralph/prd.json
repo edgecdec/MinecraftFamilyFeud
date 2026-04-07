@@ -186,7 +186,7 @@
       "title": "Sound effects",
       "spec": "specs/ui-layout.md",
       "priority": 21,
-      "status": "open",
+      "status": "done",
       "dependencies": ["TASK-013", "TASK-017"],
       "description": "Add sound effects to the board and buzzer views. Board: correct answer ding on reveal, strike buzzer sound on strike, applause on round win. Buzzer: buzz sound when player buzzes in. Use short royalty-free sound files in public/sounds/. Use the Audio API to play sounds triggered by granular socket events. Keep sounds short (<2 seconds). Add a mute toggle on the board view."
     },

@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useCallback } from 'react';
+import { Suspense, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -19,6 +19,12 @@ function BuzzerContent() {
   const params = useSearchParams();
   const roomCode = params.get('room');
   const teamName = params.get('team');
+  const buzzAudio = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    buzzAudio.current = new Audio('/sounds/buzz.wav');
+    buzzAudio.current.preload = 'auto';
+  }, []);
 
   const { gameState, lastEvent, connectionStatus, emit } = useGameSocket(
     roomCode,
@@ -47,6 +53,10 @@ function BuzzerContent() {
     if (!buzzerEnabled) return;
     emit('team:buzz', {} as Record<string, never>);
     triggerVibration();
+    if (buzzAudio.current) {
+      buzzAudio.current.currentTime = 0;
+      buzzAudio.current.play().catch(() => {/* autoplay blocked */});
+    }
   }, [buzzerEnabled, emit]);
 
   if (!roomCode || !teamName) {

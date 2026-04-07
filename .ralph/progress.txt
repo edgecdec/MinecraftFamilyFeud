@@ -169,3 +169,12 @@
 - Changed persistent strike indicators to always show when board is active (using `action.disabled` color for inactive strikes instead of `transparent`)
 - pm2 process was stopped on server — had to manually pull/build/restart. The deploy webhook may not be triggering properly.
 - Nova Act test: board page with fake room code shows "Connecting..." which is expected — can't test socket-triggered animations without a real game session.
+
+## TASK-021: Sound effects (2026-04-07)
+- Created 4 synthesized WAV sound files (ding, strike, buzz, applause) using a Node.js script — no external downloads needed.
+- Created `useSoundEffects` hook that preloads Audio elements and plays sounds in response to granular socket events (answerRevealed→ding, strike→strike, roundEnd→applause, buzzed→buzz).
+- Board view: integrated useSoundEffects hook + mute toggle (VolumeUp/VolumeOff IconButton).
+- Buzzer view: plays buzz.wav locally on button press via a ref'd Audio element (not via socket event, since it's the player's own action).
+- Lesson: The mute toggle must be visible even in the "Connecting..." state, not just after game state loads — otherwise it's inaccessible before a game starts.
+- Lesson: Force-push causes divergent branches on the server — need `git reset --hard origin/main` on server after force-with-lease pushes.
+- Lesson: The minecraft-feud pm2 process was stopped before this task — had to manually rebuild and restart on server.
